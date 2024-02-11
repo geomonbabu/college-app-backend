@@ -23,7 +23,7 @@ router.post("/addstudent",async(req,res)=>{
                 console.log(data)
                 console.log(enpassword)
 })
-router.get("/viewstudent",async(req,res)=>{
+router.get("/viewstudents",async(req,res)=>{
     let output = await studmodel.find()
     res.json(
         output
@@ -52,9 +52,34 @@ router.post("/studentlogin",async(req,res)=>{
         }
         else{
             res.json({
-                status:"success",userdata:input,
+                status:"success",userdata:input
             })
         }
     }
+})
+router.post("/adminlogin",async(req,res)=>{
+    let data = req.body
+    let username = data.username
+    let password = data.password
+    let orgusername = "admin"
+    let orgpassword = "admin"
+    if(username!=orgusername){
+        res.json({
+            status:"invalid username"
+        })
+    }
+    else {
+        if(password!=orgpassword){
+            res.json({
+                status:"incorrect password"
+            }) 
+        }
+        else{
+            res.json({
+                status:"success"
+            })
+        }
+    }
+
 })
 module.exports=router
